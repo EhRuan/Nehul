@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memorial – NEHUL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="page">
+
+      <header class="header">
+        <div class="logo">
+          <a href="index.html" style="display:flex;align-items:center;gap:12px;">
+            <div class="logo-mark"><span>N</span></div>
+            <div class="logo-text">
+              <strong>NEHUL</strong>
+              <small>IFPB — Campus Santa Rita</small>
+            </div>
+          </a>
+        </div>
+        <nav class="nav">
+          <a href="memorial.html">Memorial</a>
+          <a href="andamento.html">Em Andamento</a>
+          <a href="realizados.html">Realizados</a>
+          <a href="futuros.html">Futuros</a>
+          <a href="index.html#sobre">Sobre</a>
+        </nav>
+        <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Abrir menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </header>
+      <nav class="mobile-nav" id="mobileNav">
+        <a href="memorial.html">Memorial</a>
+        <a href="andamento.html">Em Andamento</a>
+        <a href="realizados.html">Realizados</a>
+        <a href="futuros.html">Futuros</a>
+        <a href="index.html#sobre">Sobre</a>
+      </nav>
+
+      <section class="page-header page-header--memorial">
+        <div class="pill"><span class="pill-dot"></span> Linha do tempo</div>
+        <h1 class="page-header-title">Memorial</h1>
+        <p class="page-header-desc">O histórico dos projetos já realizados pelo NEHUL, em ordem cronológica.</p>
+      </section>
+
+      <p class="load-state" id="loadState">Carregando linha do tempo…</p>
+      <p class="empty-state" id="emptyState" hidden>Nenhum projeto realizado cadastrado ainda. Assim que algum for concluído, ele aparece aqui.</p>
+      <div class="timeline-section" id="timelineSection"></div>
+
+      <footer class="footer">
+        <div class="footer-inner">
+          <div class="footer-brand">
+            <div class="footer-logo-mark"><span>N</span></div>
+            <div>
+              <div class="footer-name">NEHUL</div>
+              <div class="footer-tagline">Núcleo de Estudos em Humanidades e Linguagens</div>
+            </div>
+          </div>
+          <div class="footer-info">
+            <div>IFPB — Campus Santa Rita</div>
+            <div class="footer-site"><a href="http://www.ifpb.edu.br/santarita" target="_blank">www.ifpb.edu.br/santarita</a></div>
+            <div><a href="admin.html" class="footer-admin-link">Área do administrador</a></div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="supabase-client.js"></script>
+    <script src="projects.js"></script>
+    <script src="ui.js"></script>
+    <script src="memorial.js"></script>
+  </body>
+</html>
