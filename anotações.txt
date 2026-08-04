@@ -1,0 +1,7 @@
+npx nodemon server.js : Ele inicia o seu servidor Node.js com reinicialização automática, basicamente ele reinicia o servidor automaticamente sempre que tiver alguma alteração
+
+
+Passo a Passo para testar o back:
+
+no terminal do vscode digirtar: "cd Backend" para entrar na pasta do backend e logo após usar "npm run dev" para rodar o backend
+http://localhost:3000/ : para acessar e verificar se o bd ta ativo
