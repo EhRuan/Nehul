@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memorial – NEHUL</title>
+    <title>Projeto – NEHUL</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
   <body>
     <div class="page">
 
-            <header class="header">
+      <header class="header">
         <a href="index.html" class="logo" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
           <div class="logo-mark"><span>N</span></div>
           <div class="logo-text">
@@ -76,15 +76,51 @@
         </div>
       </aside>
 
-      <section class="page-header page-header--memorial">
-        <div class="pill"><span class="pill-dot"></span> Linha do tempo</div>
-        <h1 class="page-header-title">Memorial</h1>
-        <p class="page-header-desc">O histórico dos projetos já realizados pelo NEHUL, em ordem cronológica.</p>
-      </section>
+      <!-- CONTEÚDO DO PROJETO -->
+      <div id="projetoLoad" class="projeto-load">Carregando projeto…</div>
+      <div id="projetoNotFound" class="projeto-not-found" hidden>
+        <p>Projeto não encontrado.</p>
+        <a href="index.html">← Voltar ao início</a>
+      </div>
 
-      <p class="load-state" id="loadState">Carregando linha do tempo…</p>
-      <p class="empty-state" id="emptyState" hidden>Nenhum projeto realizado cadastrado ainda. Assim que algum for concluído, ele aparece aqui.</p>
-      <div class="timeline-section" id="timelineSection"></div>
+      <main id="projetoMain" hidden>
+
+        <!-- BREADCRUMB -->
+        <div class="projeto-breadcrumb">
+          <a href="index.html">Home</a>
+          <span>›</span>
+          <a id="breadcrumbStatus" href="#">—</a>
+          <span>›</span>
+          <span id="breadcrumbTitle">—</span>
+        </div>
+
+        <!-- HERO DO PROJETO -->
+        <section class="projeto-hero">
+          <div class="projeto-hero-inner">
+            <div id="projetoStatusBadge" class="status-badge"></div>
+            <h1 id="projetoTitulo" class="projeto-titulo"></h1>
+            <p id="projetoDescricao" class="projeto-descricao"></p>
+            <div id="projetoMeta" class="projeto-meta"></div>
+          </div>
+        </section>
+
+        <!-- MÍDIA -->
+        <section id="projetoMidiaSection" class="projeto-section" hidden>
+          <div class="projeto-section-inner">
+            <h2 class="projeto-section-title">Mídia</h2>
+            <div id="projetoMidia" class="projeto-midia-grid"></div>
+          </div>
+        </section>
+
+        <!-- EQUIPE -->
+        <section id="projetoEquipeSection" class="projeto-section" hidden>
+          <div class="projeto-section-inner">
+            <h2 class="projeto-section-title">Equipe</h2>
+            <div id="projetoEquipe" class="projeto-equipe-grid"></div>
+          </div>
+        </section>
+
+      </main>
 
       <footer class="footer">
         <div class="footer-inner">
@@ -108,8 +144,7 @@
     <script src="config.js"></script>
     <script src="supabase-client.js"></script>
     <script src="projects.js"></script>
-    <script src="ui.js"></script>
-    <script src="memorial.js"></script>
-      <script src="nav-drawer.js"></script>
+    <script src="nav-drawer.js"></script>
+    <script src="projeto.js"></script>
   </body>
 </html>

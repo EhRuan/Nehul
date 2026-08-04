@@ -6,18 +6,17 @@
    ============================================ */
 
 const STATUS_META = {
-  futuro:     { label: "Futuro",      page: "futuros.html",    badgeClass: "status-badge--futuro" },
-  andamento:  { label: "Em andamento",page: "andamento.html",  badgeClass: "status-badge--andamento" },
-  realizado:  { label: "Realizado",   page: "realizados.html", badgeClass: "status-badge--realizado" },
+  futuro:     { label: "Futuro",       page: "futuros.html",    badgeClass: "status-badge--futuro" },
+  andamento:  { label: "Em andamento", page: "andamento.html",  badgeClass: "status-badge--andamento" },
+  realizado:  { label: "Realizado",    page: "realizados.html", badgeClass: "status-badge--realizado" },
 };
 
 function formatDate(iso) {
   return new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
 }
 
-// Detecta YouTube/Vimeo e monta o embed; senão trata como arquivo de vídeo direto
 function buildVideoEmbed(url) {
-  const yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+  const yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\\w-]{11})/);
   const vimeo = url.match(/vimeo\.com\/(\d+)/);
   if (yt) {
     const iframe = document.createElement("iframe");
@@ -114,10 +113,15 @@ function buildMedia(project) {
   return wrap;
 }
 
-// Card de projeto para as páginas de listagem (andamento/futuros/realizados)
+// Card clicável — leva para projeto.html?id=ID
 function renderProjectCard(project) {
   const card = document.createElement("article");
   card.className = "project-card";
+  card.style.cursor = "pointer";
+  card.addEventListener("click", () => {
+    window.location.href = "projeto.html?id=" + project.id;
+  });
+
   card.appendChild(buildMedia(project));
 
   const body = document.createElement("div");
@@ -139,8 +143,13 @@ function renderProjectCard(project) {
   const date = document.createElement("span");
   date.textContent = formatDate(project.created_at);
   footer.appendChild(date);
-  body.appendChild(footer);
 
+  const arrow = document.createElement("span");
+  arrow.className = "project-card__arrow";
+  arrow.innerHTML = "Ver projeto →";
+  footer.appendChild(arrow);
+
+  body.appendChild(footer);
   card.appendChild(body);
   return card;
 }
@@ -154,10 +163,9 @@ async function fetchProjectsByStatus(status) {
     .order("created_at", { ascending: true });
 }
 
-// Usado pelas páginas andamento.html / futuros.html / realizados.html
 async function initListingPage(status) {
-  const grid = document.getElementById("projectsGrid");
-  const empty = document.getElementById("emptyState");
+  const grid    = document.getElementById("projectsGrid");
+  const empty   = document.getElementById("emptyState");
   const loading = document.getElementById("loadState");
 
   loading.hidden = false;
