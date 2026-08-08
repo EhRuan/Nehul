@@ -6,38 +6,87 @@
    ============================================ */
 
 const STATUS_META = {
-  futuro:     { label: "Futuro",       page: "futuros.html",    badgeClass: "status-badge--futuro" },
-  andamento:  { label: "Em andamento", page: "andamento.html",  badgeClass: "status-badge--andamento" },
-  realizado:  { label: "Realizado",    page: "realizados.html", badgeClass: "status-badge--realizado" },
+  futuro:     { label: "Futuro",      page: "futuros.html",    badgeClass: "status-badge--futuro" },
+  andamento:  { label: "Em andamento",page: "andamento.html",  badgeClass: "status-badge--andamento" },
+  realizado:  { label: "Realizado",   page: "realizados.html", badgeClass: "status-badge--realizado" },
 };
 
 function formatDate(iso) {
   return new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
 }
 
+// Extrai o ID de um vídeo do YouTube usando o parser de URL de verdade —
+// funciona independente da ordem dos parâmetros (ex: vindo de playlist,
+// onde "v=" não é o primeiro parâmetro) ou do formato do link.
+function extractYouTubeId(url) {
+  try {
+    const u = new URL(url);
+    const host = u.hostname.replace(/^www\.|^m\./, "");
+    if (host === "youtu.be") {
+      return u.pathname.slice(1, 12) || null;
+    }
+    if (host === "youtube.com" || host === "youtube-nocookie.com") {
+      if (u.pathname === "/watch") return u.searchParams.get("v");
+      const m = u.pathname.match(/^\/(?:embed|shorts|live)\/([\w-]{11})/);
+      if (m) return m[1];
+    }
+  } catch (e) { /* URL inválida — ignora */ }
+  return null;
+}
+
+// Extrai o ID do Vimeo, incluindo o hash de vídeos "não listados"
+// (ex: vimeo.com/123456789/abcd1234ef precisa do hash pra tocar)
+function extractVimeoId(url) {
+  try {
+    const u = new URL(url);
+    if (!/(^|\.)vimeo\.com$/.test(u.hostname)) return null;
+    const m = u.pathname.match(/(\d+)(?:\/([a-zA-Z0-9]+))?/);
+    if (!m) return null;
+    return m[2] ? `${m[1]}?h=${m[2]}` : m[1];
+  } catch (e) {
+    return null;
+  }
+}
+
+// Detecta YouTube/Vimeo e monta o embed; se não reconhecer o link nem for
+// um arquivo de vídeo direto, mostra um link clicável em vez de deixar a
+// área em branco.
 function buildVideoEmbed(url) {
-  const yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\\w-]{11})/);
-  const vimeo = url.match(/vimeo\.com\/(\d+)/);
-  if (yt) {
+  const ytId = extractYouTubeId(url);
+  if (ytId) {
     const iframe = document.createElement("iframe");
-    iframe.src = "https://www.youtube.com/embed/" + yt[1];
+    iframe.src = "https://www.youtube.com/embed/" + ytId;
     iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
     iframe.allowFullscreen = true;
     iframe.loading = "lazy";
     return iframe;
   }
-  if (vimeo) {
+
+  const vimeoId = extractVimeoId(url);
+  if (vimeoId) {
     const iframe = document.createElement("iframe");
-    iframe.src = "https://player.vimeo.com/video/" + vimeo[1];
+    iframe.src = "https://player.vimeo.com/video/" + vimeoId;
     iframe.allow = "autoplay; fullscreen; picture-in-picture";
     iframe.allowFullscreen = true;
     iframe.loading = "lazy";
     return iframe;
   }
-  const video = document.createElement("video");
-  video.src = url;
-  video.controls = true;
-  return video;
+
+  if (/\.(mp4|webm|ogv|ogg|mov)(\?.*)?$/i.test(url)) {
+    const video = document.createElement("video");
+    video.src = url;
+    video.controls = true;
+    return video;
+  }
+
+  // Fallback: nunca fica em branco silenciosamente
+  const link = document.createElement("a");
+  link.href = url;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.className = "media-carousel__fallback-link";
+  link.textContent = "▶ Assistir vídeo";
+  return link;
 }
 
 function buildMedia(project) {
@@ -113,15 +162,10 @@ function buildMedia(project) {
   return wrap;
 }
 
-// Card clicável — leva para projeto.html?id=ID
+// Card de projeto para as páginas de listagem (andamento/futuros/realizados)
 function renderProjectCard(project) {
   const card = document.createElement("article");
   card.className = "project-card";
-  card.style.cursor = "pointer";
-  card.addEventListener("click", () => {
-    window.location.href = "projeto.html?id=" + project.id;
-  });
-
   card.appendChild(buildMedia(project));
 
   const body = document.createElement("div");
@@ -143,13 +187,8 @@ function renderProjectCard(project) {
   const date = document.createElement("span");
   date.textContent = formatDate(project.created_at);
   footer.appendChild(date);
-
-  const arrow = document.createElement("span");
-  arrow.className = "project-card__arrow";
-  arrow.innerHTML = "Ver projeto →";
-  footer.appendChild(arrow);
-
   body.appendChild(footer);
+
   card.appendChild(body);
   return card;
 }
@@ -163,9 +202,10 @@ async function fetchProjectsByStatus(status) {
     .order("created_at", { ascending: true });
 }
 
+// Usado pelas páginas andamento.html / futuros.html / realizados.html
 async function initListingPage(status) {
-  const grid    = document.getElementById("projectsGrid");
-  const empty   = document.getElementById("emptyState");
+  const grid = document.getElementById("projectsGrid");
+  const empty = document.getElementById("emptyState");
   const loading = document.getElementById("loadState");
 
   loading.hidden = false;
