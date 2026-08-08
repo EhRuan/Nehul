@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Em Andamento – NEHUL</title>
+    <title>Realizados – NEHUL</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../Style/styles.css">
   </head>
   <body>
     <div class="page">
@@ -76,15 +76,15 @@
         </div>
       </aside>
 
-      <section class="page-header page-header--andamento">
-        <div class="pill"><span class="pill-dot"></span> Em desenvolvimento ativo</div>
-        <h1 class="page-header-title">Em Andamento</h1>
-        <p class="page-header-desc">Projetos que estão sendo pesquisados, catalogados ou produzidos neste momento pelo NEHUL.</p>
+      <section class="page-header page-header--realizado">
+        <div class="pill"><span class="pill-dot"></span> Concluídos com sucesso</div>
+        <h1 class="page-header-title">Realizados</h1>
+        <p class="page-header-desc">Projetos já concluídos pelo NEHUL — o resultado do trabalho de pesquisa e extensão do núcleo.</p>
       </section>
 
       <section class="projects-section">
         <p class="load-state" id="loadState">Carregando projetos…</p>
-        <p class="empty-state" id="emptyState" hidden>Nenhum projeto em andamento no momento. Volte em breve!</p>
+        <p class="empty-state" id="emptyState" hidden>Nenhum projeto realizado cadastrado ainda.</p>
         <div class="projects-grid" id="projectsGrid"></div>
       </section>
 
@@ -107,11 +107,11 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="config.js"></script>
-    <script src="supabase-client.js"></script>
-    <script src="projects.js"></script>
-    <script src="ui.js"></script>
-    <script>initListingPage("andamento");</script>
-      <script src="nav-drawer.js"></script>
+    <script src="../JavaScript/config.js"></script>
+    <script src="../JavaScript/supabase-client.js"></script>
+    <script src="../JavaScript/projects.js"></script>
+    <script src="../JavaScript/ui.js"></script>
+    <script src="../JavaScript/nav-drawer.js"></script>
+    <script>initListingPage("realizado");</script>
   </body>
 </html>
