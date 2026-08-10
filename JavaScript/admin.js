@@ -165,6 +165,13 @@ function renderRow(project, siblings) {
 
   const actions = document.createElement("div");
   actions.className = "admin-row__actions";
+  const viewLink = document.createElement("a");
+  viewLink.className = "btn-ghost";
+  viewLink.textContent = "Ver";
+  viewLink.href = "projeto.html?id=" + encodeURIComponent(project.id);
+  viewLink.target = "_blank";
+  viewLink.rel = "noopener noreferrer";
+  actions.appendChild(viewLink);
   const editBtn = document.createElement("button");
   editBtn.className = "btn-ghost";
   editBtn.textContent = "Editar";
