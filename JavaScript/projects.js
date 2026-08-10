@@ -187,6 +187,15 @@ function renderProjectCard(project) {
   const date = document.createElement("span");
   date.textContent = formatDate(project.created_at);
   footer.appendChild(date);
+
+  const link = document.createElement("a");
+  link.className = "project-card__link";
+  link.href = "projeto.html?id=" + encodeURIComponent(project.id);
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.textContent = "Ver projeto →";
+  footer.appendChild(link);
+
   body.appendChild(footer);
 
   card.appendChild(body);

@@ -1,3 +1,9 @@
+/* ============================================
+   NEHUL – Museu Digital
+   memorial.js — linha do tempo dos projetos com
+   status "realizado", em ordem cronológica.
+   ============================================ */
+
 async function loadTimeline() {
   const loading = document.getElementById("loadState");
   const empty = document.getElementById("emptyState");
@@ -53,6 +59,13 @@ function renderTimelineItem(project) {
     desc.textContent = project.description;
     body.appendChild(desc);
   }
+  const link = document.createElement("a");
+  link.className = "project-card__link";
+  link.href = "projeto.html?id=" + encodeURIComponent(project.id);
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.textContent = "Ver projeto →";
+  body.appendChild(link);
   card.appendChild(body);
 
   item.appendChild(card);

@@ -55,8 +55,10 @@ function renderShowcaseSlide() {
 
   const cta = document.createElement("a");
   cta.className = "showcase-card__cta";
-  cta.href = meta ? meta.page : "#";
-  cta.textContent = "Ver na página de " + (meta ? meta.label.toLowerCase() : project.status) + " →";
+  cta.href = "projeto.html?id=" + encodeURIComponent(project.id);
+  //cta.target = "_blank";
+  cta.rel = "noopener noreferrer";
+  cta.textContent = "Ver projeto completo →";
   body.appendChild(cta);
 
   card.appendChild(body);

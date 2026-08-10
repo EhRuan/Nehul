@@ -34,6 +34,7 @@ async function initProjetoPage() {
     .single();
 
   if (error || !project) {
+    console.error("Erro ao buscar projeto (id='" + id + "'):", error);
     loadEl.hidden = true;
     notFoundEl.hidden = false;
     return;
