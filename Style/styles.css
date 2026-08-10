@@ -1044,6 +1044,130 @@ a:hover {
 }
 
 /* ============================================
+   PÁGINA INDIVIDUAL DE PROJETO (projeto.html)
+   ============================================ */
+.projeto-load, .projeto-not-found {
+  max-width: 600px;
+  margin: 6rem auto;
+  padding: 0 2rem;
+  text-align: center;
+  color: #777;
+  font-size: 14px;
+}
+.projeto-not-found a { color: #1E6B3C !important; text-decoration: underline !important; }
+
+.projeto-breadcrumb {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 2rem 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #999;
+  flex-wrap: wrap;
+}
+.projeto-breadcrumb a { color: #666 !important; text-decoration: none !important; }
+.projeto-breadcrumb a:hover { color: #1E6B3C !important; }
+.projeto-breadcrumb span:last-child { color: #333; }
+
+.projeto-hero {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 3rem;
+}
+.projeto-hero-inner { max-width: 700px; }
+.projeto-titulo {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(32px, 5vw, 48px);
+  color: #111;
+  margin: 14px 0 12px;
+  line-height: 1.1;
+}
+.projeto-descricao {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+.projeto-meta {
+  margin-top: 16px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.projeto-meta-item { font-size: 12px; color: #999; }
+
+.projeto-section { border-top: 1px solid rgba(0,0,0,0.08); padding: 3rem 0; }
+.projeto-section-inner { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+.projeto-section-title {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: 24px;
+  color: #111;
+  margin-bottom: 1.5rem;
+}
+
+/* Mídia: imagens em grade com tamanho padronizado; vídeo maior e em
+   largura total (facilita clicar nos controles, inclusive volume) */
+.projeto-midia-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.projeto-midia-item {
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+  background: repeating-linear-gradient(45deg, #F0F4F1, #F0F4F1 8px, #E7ECE8 8px, #E7ECE8 16px);
+}
+.projeto-midia-item img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.projeto-midia-item--video {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+.projeto-midia-item--video iframe,
+.projeto-midia-item--video video {
+  width: 100%; height: 100%; border: none; display: block;
+}
+
+.projeto-equipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+.equipe-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1.5px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 14px;
+}
+.equipe-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: #1E6B3C;
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Instrument Serif', serif;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.equipe-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.equipe-info strong { font-size: 14px; color: #111; }
+.equipe-info span { font-size: 12px; color: #888; }
+
+@media (max-width: 640px) {
+  .projeto-midia-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+}
+
+/* ============================================
    MEMORIAL — linha do tempo dos projetos realizados
    ============================================ */
 .timeline-section {
