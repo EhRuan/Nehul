@@ -140,6 +140,15 @@
       </footer>
     </div>
 
+    <!-- LIGHTBOX (visualização ampliada de imagem) -->
+    <div class="lightbox-overlay" id="lightboxOverlay" hidden>
+      <button class="lightbox-close" id="lightboxClose" aria-label="Fechar">×</button>
+      <button class="lightbox-nav lightbox-nav--prev" id="lightboxPrev" aria-label="Imagem anterior">‹</button>
+      <img class="lightbox-image" id="lightboxImage" src="" alt="">
+      <button class="lightbox-nav lightbox-nav--next" id="lightboxNext" aria-label="Próxima imagem">›</button>
+      <span class="lightbox-counter" id="lightboxCounter"></span>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../JavaScript/config.js"></script>
     <script src="../JavaScript/supabase-client.js"></script>

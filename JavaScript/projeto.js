@@ -84,13 +84,14 @@ async function initProjetoPage() {
     document.getElementById("projetoMidiaSection").hidden = false;
     const midiaGrid = document.getElementById("projetoMidia");
 
-    images.forEach((url) => {
+    images.forEach((url, index) => {
       const wrap = document.createElement("div");
       wrap.className = "projeto-midia-item";
       const img = document.createElement("img");
       img.src = url;
       img.alt = project.title;
       img.loading = "lazy";
+      img.addEventListener("click", () => openLightbox(images, index));
       wrap.appendChild(img);
       midiaGrid.appendChild(wrap);
     });
@@ -152,3 +153,52 @@ async function initProjetoPage() {
 }
 
 initProjetoPage();
+
+/* ============================================
+   Lightbox — clique numa imagem pra ver em tamanho maior
+   ============================================ */
+let lightboxImages = [];
+let lightboxIndex = 0;
+
+function openLightbox(images, index) {
+  lightboxImages = images;
+  lightboxIndex = index;
+  renderLightbox();
+  document.getElementById("lightboxOverlay").hidden = false;
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox() {
+  document.getElementById("lightboxOverlay").hidden = true;
+  document.body.style.overflow = "";
+}
+
+function renderLightbox() {
+  const img = document.getElementById("lightboxImage");
+  const counter = document.getElementById("lightboxCounter");
+  img.src = lightboxImages[lightboxIndex];
+  const multiple = lightboxImages.length > 1;
+  counter.hidden = !multiple;
+  counter.textContent = (lightboxIndex + 1) + " / " + lightboxImages.length;
+  document.getElementById("lightboxPrev").hidden = !multiple;
+  document.getElementById("lightboxNext").hidden = !multiple;
+}
+
+function lightboxGo(delta) {
+  lightboxIndex = (lightboxIndex + delta + lightboxImages.length) % lightboxImages.length;
+  renderLightbox();
+}
+
+document.getElementById("lightboxClose")?.addEventListener("click", closeLightbox);
+document.getElementById("lightboxPrev")?.addEventListener("click", () => lightboxGo(-1));
+document.getElementById("lightboxNext")?.addEventListener("click", () => lightboxGo(1));
+document.getElementById("lightboxOverlay")?.addEventListener("click", (e) => {
+  if (e.target.id === "lightboxOverlay") closeLightbox();
+});
+document.addEventListener("keydown", (e) => {
+  const overlay = document.getElementById("lightboxOverlay");
+  if (!overlay || overlay.hidden) return;
+  if (e.key === "Escape") closeLightbox();
+  if (e.key === "ArrowLeft") lightboxGo(-1);
+  if (e.key === "ArrowRight") lightboxGo(1);
+});
