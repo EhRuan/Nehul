@@ -1,0 +1,217 @@
+  /* =========================================================
+     TOKENS
+     Paleta inspirada nos figurinos de Carnaval e teatro popular
+     de Heliton: terracota, dourado velho, vinho e o preto quente
+     de uma coxia de teatro.
+     ========================================================= */
+  :root{
+    --bg-0:#151110;
+    --bg-1:#1d1815;
+    --ember:#c96a3e;
+    --ember-soft:#e08a54;
+    --gold:#b8894a;
+    --cream:#f4ead9;
+    --cream-dim:#cdbfa9;
+    --wine:#5a1f22;
+    --spacing: clamp(140px, 22vw, 340px);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse 80% 55% at 50% 38%, rgba(201,106,62,0.16), transparent 60%),
+      radial-gradient(ellipse 120% 80% at 50% 100%, rgba(90,31,34,0.35), transparent 65%),
+      var(--bg-0);
+    color:var(--cream);
+    font-family: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding: clamp(24px, 5vh, 56px) 16px;
+    overflow-x:hidden;
+  }
+
+  /* ---------- Header / playbill title ---------- */
+  .stage-header{
+    text-align:center;
+    margin-bottom: clamp(18px, 3.5vh, 40px);
+    max-width: 720px;
+  }
+  .eyebrow{
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 10px;
+  }
+  .stage-header h1{
+    font-size: clamp(1.7rem, 4vw, 2.7rem);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin: 0 0 10px;
+    color: var(--cream);
+    text-shadow: 0 2px 18px rgba(201,106,62,0.25);
+  }
+  .stage-header h1 em{
+    font-style: italic;
+    color: var(--ember-soft);
+  }
+  .stage-header p{
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.92rem;
+    color: var(--cream-dim);
+    margin:0;
+    line-height:1.5;
+  }
+  .rule{
+    width:64px;height:1px;margin:16px auto 0;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* ---------- Carousel wrapper ---------- */
+  .carousel-wrap{
+    position:relative;
+    width:100%;
+    max-width: 1180px;
+    height: clamp(360px, 62vh, 620px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .viewport{
+    position:relative;
+    width:100%;
+    height:100%;
+    perspective: 1400px;
+    perspective-origin: 50% 42%;
+  }
+
+  .track{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform-style: preserve-3d;
+  }
+
+  .slide{
+    position:absolute;
+    margin:0;
+    top:50%;
+    left:50%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width: clamp(210px, 30vw, 420px);
+    transition:
+      transform 0.7s cubic-bezier(.22,.68,.24,1),
+      filter 0.7s cubic-bezier(.22,.68,.24,1),
+      opacity 0.7s cubic-bezier(.22,.68,.24,1);
+    will-change: transform, filter, opacity;
+  }
+
+  .frame{
+    position:relative;
+    width:100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 6px;
+    overflow:hidden;
+    background: #000;
+    box-shadow:
+      0 25px 60px -15px rgba(0,0,0,0.7),
+      0 0 0 1px rgba(184,137,74,0.15);
+  }
+  .slide[data-portrait="1"] .frame{ aspect-ratio: 3 / 4; }
+
+  .frame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition: filter 0.7s cubic-bezier(.22,.68,.24,1);
+  }
+
+  .frame-sheen{
+    position:absolute;inset:0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent 30%, transparent 70%, rgba(0,0,0,0.35));
+    pointer-events:none;
+  }
+
+  .slide figcaption{
+    font-family: Helvetica, Arial, sans-serif;
+    margin-top: 14px;
+    font-size: clamp(0.82rem, 1.05vw + 0.4rem, 1.05rem);
+    line-height:1.4;
+    text-align:center;
+    color: var(--cream-dim);
+    max-width: 34ch;
+    transition: opacity 0.7s ease, color 0.7s ease, transform 0.7s ease;
+  }
+
+  .slide.is-center figcaption{
+    color: var(--cream);
+    font-weight: 600;
+  }
+  .slide.is-center .frame{
+    box-shadow:
+      0 35px 80px -18px rgba(0,0,0,0.75),
+      0 0 0 1px rgba(224,138,84,0.55),
+      0 0 60px -10px rgba(201,106,62,0.45);
+  }
+
+  /* ---------- Arrows ----------
+     Posicionadas ACIMA das imagens laterais embaçadas,
+     ladeando a imagem central em destaque. */
+  .arrow{
+    position:absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(244,234,217,0.25);
+    background: rgba(21,17,16,0.55);
+    backdrop-filter: blur(6px);
+    color: var(--cream);
+    font-size: 1.1rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+  }
+  .arrow:hover{
+    background: rgba(201,106,62,0.35);
+    border-color: var(--ember-soft);
+    transform: translateY(-50%) translateY(-2px);
+  }
+  .arrow:active{ transform: translateY(-50%) scale(0.94); }
+  .arrow-left{ left: clamp(6px, 9%, 130px); }
+  .arrow-right{ right: clamp(6px, 9%, 130px); }
+  .arrow svg{ width:18px; height:18px; }
+
+  .counter{
+    margin-top: clamp(14px, 3vh, 28px);
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+  }
+  .counter span{ color: var(--cream-dim); }
+
+  @media (max-width: 640px){
+    .arrow{ width:38px; height:38px; }
+    .carousel-wrap{ height: 58vh; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .slide, .frame img, .slide figcaption{ transition-duration: 0.01ms !important; }
+  }
