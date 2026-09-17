@@ -12,4 +12,4 @@
 
 ## O banco de dados utilizado foi o PostegreSQL do site do Supabase aonde estão sendo armazenadas todas as mídias dos projetos.
 
-## O site também tem uma página dedicada ao Heliton ???
+## O site também tem uma página dedicada ao Heliton Santana que foi um importante ativista da Paraíba que defendeu seus direitos.
